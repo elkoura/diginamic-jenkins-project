@@ -1,13 +1,10 @@
 pipeline {
   agent any
+  tools {
+    maven 'maven 3.9.9'
+  }
   stages {
-    stage('initialize') {
-      steps {
-        git 'https://github.com/elkoura/diginamic-jenkins-project.git'
-        
-    }
-      
-    }
+  
     stage('Build') {
       steps {
         echo 'Building..'
