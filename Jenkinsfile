@@ -51,24 +51,20 @@ pipeline {
     }
 
     stage('Docker Push') {
-      steps {
-        echo 'Pushing Docker Image to Registry...'
-        script {
-          withCredentials([usernamePassword(
-            credentialsId: 'docker-hub-credentials', // L'ID configuré dans Jenkins
-            usernameVariable: 'DOCKER_USER',
-            passwordVariable: 'DOCKER_PASSWORD'
-          )]) {
-            // On se connecte au registre
-            sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}"
-            // On push l'image
-            sh 'docker push elkoura/my-app:latest'
-            // Optionnel : se déloguer
-            sh 'docker logout'
-          }
-        }
+  steps {
+    script {
+      withCredentials([usernamePassword(
+          credentialsId: 'docker-hub-credentials',
+          usernameVariable: 'DOCKER_USER',
+          passwordVariable: 'DOCKER_PASSWORD'
+      )]) {
+        sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}"
+        sh "docker push elkoura/my-app:latest"
+        sh "docker logout"
       }
     }
+  }
+}
 
     // Optionnel : déployer le conteneur Docker localement
     stage('Deploy') {
