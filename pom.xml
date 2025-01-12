@@ -22,5 +22,31 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <build>
+  <plugins>
+    <!-- Plugin pour générer un jar “exécutable” (fat jar) -->
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-shade-plugin</artifactId>
+      <version>3.3.0</version>
+      <executions>
+        <execution>
+          <phase>package</phase>
+          <goals>
+            <goal>shade</goal>
+          </goals>
+          <configuration>
+            <createDependencyReducedPom>true</createDependencyReducedPom>
+            <archive>
+              <manifest>
+                <mainClass>fr.diginamic.Main</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
+</build>
 
 </project>
