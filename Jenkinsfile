@@ -79,10 +79,5 @@ pipeline {
   }
 
 
-  stage('Test Docker Avail') {
-    steps {
-        sh "docker version"
-        sh "docker ps"
-    }
-}
+
 }
