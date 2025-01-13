@@ -1,13 +1,13 @@
-# Part d'une image openjdk
-FROM openjdk:17-jdk
+FROM jenkins/jenkins:jdk17
 
-# Choix du dossier de travail
-WORKDIR /elkoura/my-app
+# Passer en root pour installer Docker
+USER root
 
-COPY target/projet-jenkins-1.0-SNAPSHOT-shaded.jar app.jar
+# Installer Docker CLI (sous Debian/Ubuntu)
+RUN apt-get update && apt-get install -y docker.io
 
+# Ajouter l'utilisateur jenkins au groupe docker 
+RUN usermod -aG docker jenkins
 
-
-EXPOSE 8080
-
-CMD ["java", "-jar", "app.jar"]
+# Revenir en mode utilisateur Jenkins
+USER jenkins
